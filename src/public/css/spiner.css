@@ -22,3 +22,17 @@
       transform: rotate(360deg);
     }
   }
+
+.contenedor{
+  background-image: url("/images/background-converter.png");
+  height:90vh;
+  padding-top: 200px;
+  background-size: cover;
+}
+
+.uploader{
+  background:white;
+  border-radius: 15px;
+  padding:35px;
+}
+

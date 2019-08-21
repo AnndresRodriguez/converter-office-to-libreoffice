@@ -4,18 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/spiner.css">
     <script src="/js/bootstrap.min.js"></script>
-    <title>Document</title>
+    <title>Convertidor</title>
 </head>
 <body>
+
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #fff; color:white">
+                <a class="navbar-brand" href="#" style="color:white; background: white; border-radius: 30px;">
+                   <img src="/images/logo.png" class="" alt="logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              </nav>
+    <div class="contenedor">
+      <div class="container uploader">
+        <div class="d-flex justify-content-between">
+            <h5>1. Seleccione El Archivo</h5>
+            <h5>2. Inicie la Subida del Archivo</h5>
+            <h5>3. Realize la descarga</h5>
+        </div>
+        
+        <ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
+           <li class="nav-item">
+             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">DOCX a ODT</a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">XSLX a ODS</a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">PPTX a ODT</a>
+           </li>
+         </ul>
+         <div class="tab-content" id="myTabContent">
+           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <div class="d-flex justify-content-around mt-4">
+                <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <div class="d-flex justify-content-around">
+                        <input class="mr-5" type="file" class="file" name="file">
+                        <button class="btn btn-success ml-5" type="submit">Subir Archivo</button>
+                    </div>
+                </form>
+                <div class="lds-dual-ring"></div>
+                <form action="/download" method="GET" enctype="multipart/form-data">
+                    <button class="btn btn-success" type="submit">Descargar el archivo</button>
+                </form>
+            </div>
+           </div>
+           <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem optio laborum assumenda itaque! Dolore officiis ipsa nesciunt tempora. Hic, tempore? Officia, nulla velit! Velit, quia modi. Consectetur sed repudiandae veritatis!</div>
+           <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Lorem ipsum dolor sit amet consectetur adipisicing elit. Error officia cumque quos sequi dicta consectetur voluptate eveniet reiciendis, esse vero accusantium voluptatibus at sunt itaque culpa quis facere accusamus est.</div>
+         </div>
     
-    <h1>Upload Images</h1>
-    <!-- <div class="lds-dual-ring"></div> -->
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-        <input class="" type="file" class="file" name="file">
-        <button class="btn btn-success" type="submit">Subir Archivo</button>
-    </form>
+            <!-- <div class="d-flex justify-content-around">
+                <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <div class="d-flex justify-content-around">
+                        <input class="mr-5" type="file" class="file" name="file">
+                        <button class="btn btn-success ml-5" type="submit">Subir Archivo</button>
+                    </div>
+                </form>
+                <div class="lds-dual-ring"></div>
+                <form action="/download-doc-odt" method="POST" enctype="multipart/form-data">
+                    <button class="btn btn-success" type="submit">Descargar el archivo</button>
+                </form>
+            </div> -->
+    </div>
+    </div>
+    
+    
+    
 </body>
 </html>
