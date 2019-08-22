@@ -25,10 +25,9 @@
               </nav>
     <div class="contenedor">
       <div class="container uploader">
-        <div class="d-flex justify-content-between">
-            <h5>1. Seleccione El Archivo</h5>
-            <h5>2. Inicie la Subida del Archivo</h5>
-            <h5>3. Realize la descarga</h5>
+        <div class="d-flex justify-content-around">
+            <h5>1. Seleccione el Archivo en el formato especificado</h5>
+            <h5>2. Realice la descarga</h5>
         </div>
         
         <ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
@@ -46,15 +45,14 @@
            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
               <div class="d-flex justify-content-around mt-4">
                 <form action="/upload" method="POST" enctype="multipart/form-data">
-                    <div class="d-flex justify-content-around">
+                    <div class="d-flex justify-content-around align-items-center">
                         <input class="mr-5" type="file" class="file" name="file">
-                        <button class="btn btn-success ml-5" type="submit">Subir Archivo</button>
+                        <div class="lds-dual-ring"></div>
+                        <button class="btn btn-success ml-5" type="submit">Convertir el Archivo</button>
                     </div>
                 </form>
-                <div class="lds-dual-ring"></div>
-                <form action="/download" method="GET" enctype="multipart/form-data">
-                    <button class="btn btn-success" type="submit">Descargar el archivo</button>
-                </form>
+                
+
             </div>
            </div>
            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem optio laborum assumenda itaque! Dolore officiis ipsa nesciunt tempora. Hic, tempore? Officia, nulla velit! Velit, quia modi. Consectetur sed repudiandae veritatis!</div>

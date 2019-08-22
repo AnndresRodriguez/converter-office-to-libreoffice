@@ -4,6 +4,8 @@ const request = require('request');
 const fs = require('fs');
 const apiKey = process.env.API_TOKEN;
 const uuid = require('uuid/v4')
+const downloader = require("download-file")
+const path = require("path")
 
 router.get("/", (req, res) => {
     res.render("index")
@@ -62,7 +64,6 @@ request.get ('https://sandbox.zamzar.com/v1/jobs/' + 7083769, function (err, res
 
 router.get('/download', (req, res) => {
 
-    const fileID = 54393372;
     const localFilename = `src/files/downloads/${uuid()}.odt`;
 
 // Note: NPM's request library is incompatible with our API when its followRedirect flag is turned
@@ -88,7 +89,8 @@ function (err, response, body) {
     }
 }).auth(apiKey,'',true).pipe(fs.createWriteStream(localFilename));
 
-res.redirect("http://localhost:3000/")
+
+res.download(`/xampp/htdocs/conversor/${localFilename}`)
 
 })
 
