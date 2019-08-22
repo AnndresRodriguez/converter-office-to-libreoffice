@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
 
 router.get("/validate", (req, res) => {
 
-    request.get('https://sandbox.zamzar.com/v1/formats/doc', function (err, response, body) {
+    request.get('https://sandbox.zamzar.com/v1/formats/xls', function (err, response, body) {
     if (err) {
         console.error('Unable to get formats', err);
     } else {
@@ -21,11 +21,6 @@ router.get("/validate", (req, res) => {
         
     }
 }).auth(apiKey, '', true);
-})
-
-router.post("/doctoodt", (req, res) => {
-
-  
 })
 
 router.post("/upload", (req, res) => {
@@ -41,6 +36,7 @@ router.post("/upload", (req, res) => {
     } else {
         console.log('Conversion Realizada datos de su conversion');
         const data = JSON.parse(body)
+        console.log('id upload', data.id)
         res.redirect(`http://localhost:3000/convert?job=${data.id}`)
     }
 }).auth(apiKey, '', true);
@@ -53,7 +49,7 @@ request.get ('https://sandbox.zamzar.com/v1/jobs/' + 7083769, function (err, res
     if (err) {
         console.error('Unable to get job', err);
     } else {
-        console.log('SUCCESS! Got job:');
+        console.log('Realizada la conversion');
         const data = JSON.parse(body)
         res.redirect(`http://localhost:3000/download?id=${data.target_files[0].id}`)
         

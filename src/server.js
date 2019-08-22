@@ -62,7 +62,7 @@ app.use(express.json());
 
 // Routes Controllers
 
-app.use(require("./routes/routes"))
+app.use(require("./routes/doctoodt"))
 
 //app.use('/admin', adminController);
 

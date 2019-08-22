@@ -32,13 +32,13 @@
         
         <ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
            <li class="nav-item">
-             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">DOCX a ODT</a>
+             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">DOC a ODT</a>
            </li>
            <li class="nav-item">
-             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">XSLX a ODS</a>
+             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">XLS a ODS</a>
            </li>
            <li class="nav-item">
-             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">PPTX a ODT</a>
+             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">PPT a ODT</a>
            </li>
          </ul>
          <div class="tab-content" id="myTabContent">
@@ -51,12 +51,30 @@
                         <button class="btn btn-success ml-5" type="submit">Convertir el Archivo</button>
                     </div>
                 </form>
-                
-
             </div>
            </div>
-           <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem optio laborum assumenda itaque! Dolore officiis ipsa nesciunt tempora. Hic, tempore? Officia, nulla velit! Velit, quia modi. Consectetur sed repudiandae veritatis!</div>
-           <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Lorem ipsum dolor sit amet consectetur adipisicing elit. Error officia cumque quos sequi dicta consectetur voluptate eveniet reiciendis, esse vero accusantium voluptatibus at sunt itaque culpa quis facere accusamus est.</div>
+           <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="d-flex justify-content-around mt-4">
+              <form action="/uploadxls" method="POST" enctype="multipart/form-data">
+                <div class="d-flex justify-content-around align-items-center">
+                    <input class="mr-5" type="file" class="file" name="file">
+                    <div class="lds-dual-ring"></div>
+                    <button class="btn btn-primary ml-5" type="submit">Convertir el Archivo</button>
+                </div>
+              </form>
+            </div>
+           </div>
+           <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+              <div class="d-flex justify-content-around mt-4">
+                  <form action="/uploadppt" method="POST" enctype="multipart/form-data">
+                    <div class="d-flex justify-content-around align-items-center">
+                        <input class="mr-5" type="file" class="file" name="file">
+                        <div class="lds-dual-ring"></div>
+                        <button class="btn btn-warning ml-5" type="submit">Convertir el Archivo</button>
+                    </div>
+                  </form>
+                </div>
+           </div>
          </div>
     
             <!-- <div class="d-flex justify-content-around">
