@@ -22,7 +22,10 @@ router.post("/upload", async (req, res) => {
 
     const responseUpload = await zamzar.uploadFile("odt", req.file.filename)
     console.log('responseUpload', responseUpload);
-    res.redirect(`http://localhost:3000/convert?job=${responseUpload}`)
+    // res.redirect(`http://localhost:3000/convert?job=${responseUpload}`)
+     res.redirect(`https://converter-office.herokuapp.com/convert?job=${responseUpload}`)
+
+
 
 })
 
@@ -30,7 +33,7 @@ router.get("/convert", async(req, res) => {
 
     const responseConvert = await zamzar.convertFile(req.query.job);
     console.log('responseConvert', responseConvert);
-    res.redirect(`http://localhost:3000/validatestatus?id=${responseConvert}`)
+    res.redirect(`https://converter-office.herokuapp.com/validatestatus?id=${responseConvert}`)
 
 });
 
@@ -45,7 +48,7 @@ router.get('/validatestatus',(req, res) => {
                 
                 // res.json(responseStatus);
 
-                res.redirect(`http://localhost:3000/download?id=${responseStatus.target_files[0].id}`)
+                res.redirect(`https://converter-office.herokuapp.com/download?id=${responseStatus.target_files[0].id}`)
 
                 // res.redirect(`http://localhost:3000/validatestatus?id=${responseStatus.target_files[0].id }`)
             }
