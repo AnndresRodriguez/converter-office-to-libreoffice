@@ -20,7 +20,6 @@ router.get("/validate", async(req, res) => {
 
 router.post("/upload", async (req, res) => {
 
-    
     const responseUpload = await zamzar.uploadFile("odt", req.file.filename)
     console.log('responseUpload', responseUpload);
     // res.redirect(`http://localhost:3000/convert?job=${responseUpload}`)
@@ -63,16 +62,13 @@ router.get('/validatestatus',(req, res) => {
             if(responseStatus.target_files[0].id === undefined){
                 res.json({"error": "Wait for the conversion file"})
             }else{
-                
-               
-                res.redirect(`${process.env.URL_API}/download?id=${responseStatus.target_files[0].id}`)
 
+                res.redirect(`${process.env.URL_API}/download?id=${responseStatus.target_files[0].id}&name=${responseStatus.target_files[0].name}`)
                  // console.log('estado', responseStatus) 
-
                 // res.redirect(`http://localhost:3000/validatestatus?id=${responseStatus.target_files[0].id }`)
             }
 
-    }, 5000)
+    }, 8000)
 
 //     request.get('https://sandbox.zamzar.com/v1/jobs/' + req.query.id, function (err, response, body)
 // {
@@ -92,7 +88,7 @@ router.get('/validatestatus',(req, res) => {
 
 router.get('/download', (req, res) => {
 
-    const localFilename = `src/routes/${uuid()}.odt`;
+    const localFilename = `src/routes/${req.query.name}`;
 
 // Nota: La librería "request" es incompatible con su api cuando la bandera  followRedirect flag cambia a true
 

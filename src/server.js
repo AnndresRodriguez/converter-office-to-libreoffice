@@ -26,6 +26,7 @@ const upload = app.use(multer({
 	storage,
 	dest: path.join(__dirname, 'files/uploads/'),
 	limits: {filesize: 1000000}
+	// ,
 	// fileFilter: (req, file, cb) => {
 	// 	const fileTypes = /ppt|xls|docx/;
 	// 	const mimetype = fileTypes.test(file.mimetype);

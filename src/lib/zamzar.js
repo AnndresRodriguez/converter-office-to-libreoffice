@@ -7,7 +7,6 @@ const path = require("path");
 
 let serviceZamzar = {
   validateFile: format => {
-
     return new Promise((resolve, reject) =>{
       request.get(`https://sandbox.zamzar.com/v1/formats/${format}`, function(err,response,body) {
         if (err) {
@@ -19,12 +18,11 @@ let serviceZamzar = {
       }).auth(apiKey, "", true);
       
     })
-    
   },
 
   uploadFile: (targetFormat, filename) => {
 
-    console.log('filename es', filename)
+    //console.log('filename es', filename)
     const formData = {
         target_format: `${targetFormat}`,
         source_file: fs.createReadStream(`src/files/uploads/${filename}`)
@@ -35,10 +33,11 @@ let serviceZamzar = {
       request.post({url:'https://sandbox.zamzar.com/v1/jobs/', formData: formData}, function (err, response, body) {
     if (err) {
         console.log('Hubo un error al realizar la conversion', err);
-        reject(0)
+         reject(0)
     } else {
         console.log('Conversion Realizada datos de su conversion');
         const data = JSON.parse(body)
+        console.log('data upload', data)
         resolve(data.id)
         // console.log('Convert id', data.id)
         //res.redirect(`http://localhost:3000/convert?job=${data.id}`)
