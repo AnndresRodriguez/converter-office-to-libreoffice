@@ -25,18 +25,18 @@ const storage = multer.diskStorage({
 const upload = app.use(multer({
 	storage,
 	dest: path.join(__dirname, 'files/uploads/'),
-	limits: {filesize: 1000000},
-	fileFilter: (req, file, cb) => {
-		const fileTypes = /pdf|doc|docx/;
-		const mimetype = fileTypes.test(file.mimetype);
-		const extname = fileTypes.test(path.extname(file.originalname));
+	limits: {filesize: 1000000}
+	// fileFilter: (req, file, cb) => {
+	// 	const fileTypes = /ppt|xls|docx/;
+	// 	const mimetype = fileTypes.test(file.mimetype);
+	// 	const extname = fileTypes.test(path.extname(file.originalname));
 
-		if(mimetype && extname){
-			return cb(null, true)
-		}
+	// 	if(mimetype && extname){
+	// 		return cb(null, true)
+	// 	}
 
-		cb("Error: los archivos deben ser en extension docx")
-	}
+	// 	cb("Error: los archivos deben ser en extension docx")
+	// }
 }).single('file'))
 
 //--------------------------------------------------------------------------------

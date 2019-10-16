@@ -11,21 +11,38 @@ router.get("/", (req, res) => {
     res.render("index")
 })
 
-router.get("/validate", (req, res) => {
+router.get("/validate", async(req, res) => {
 
-    const responseValidate = zamzar.validateFile('odt');
+    const responseValidate = await zamzar.validateFile('xls');
     res.json(responseValidate)
     
 })
 
 router.post("/upload", async (req, res) => {
 
+    
     const responseUpload = await zamzar.uploadFile("odt", req.file.filename)
     console.log('responseUpload', responseUpload);
     // res.redirect(`http://localhost:3000/convert?job=${responseUpload}`)
-     res.redirect(`https://converter-office.herokuapp.com/convert?job=${responseUpload}`)
+     res.redirect(`${process.env.URL_API}/convert?job=${responseUpload}`)
 
+})
 
+router.post("/ppttoodp", async (req, res) => {
+
+    const responseUploadPpt = await zamzar.uploadFile("odp", req.file.filename)
+    console.log('responseUploadPpt', responseUploadPpt);
+    // res.redirect(`http://localhost:3000/convert?job=${responseUpload}`)
+     res.redirect(`${process.env.URL_API}/convert?job=${responseUploadPpt}`)
+
+})
+
+router.post("/xlstoods", async (req, res) => {
+
+    const responseUploadOds = await zamzar.uploadFile("ods", req.file.filename)
+    console.log('responseUploadOds', responseUploadOds);
+    // res.redirect(`http://localhost:3000/convert?job=${responseUpload}`)
+     res.redirect(`${process.env.URL_API}/convert?job=${responseUploadOds}`)
 
 })
 
@@ -33,7 +50,7 @@ router.get("/convert", async(req, res) => {
 
     const responseConvert = await zamzar.convertFile(req.query.job);
     console.log('responseConvert', responseConvert);
-    res.redirect(`https://converter-office.herokuapp.com/validatestatus?id=${responseConvert}`)
+    res.redirect(`${process.env.URL_API}/validatestatus?id=${responseConvert}`)
 
 });
 
@@ -41,14 +58,16 @@ router.get('/validatestatus',(req, res) => {
 
     setTimeout(async () =>{
 
+        console.log('req.query.id', req.query.id)
         const responseStatus = await zamzar.validateStatus(req.query.id);
             if(responseStatus.target_files[0].id === undefined){
                 res.json({"error": "Wait for the conversion file"})
             }else{
                 
-                // res.json(responseStatus);
+               
+                res.redirect(`${process.env.URL_API}/download?id=${responseStatus.target_files[0].id}`)
 
-                res.redirect(`https://converter-office.herokuapp.com/download?id=${responseStatus.target_files[0].id}`)
+                 // console.log('estado', responseStatus) 
 
                 // res.redirect(`http://localhost:3000/validatestatus?id=${responseStatus.target_files[0].id }`)
             }
