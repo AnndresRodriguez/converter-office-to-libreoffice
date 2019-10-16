@@ -4,8 +4,8 @@ const request = require('request');
 const fs = require('fs');
 const apiKey = process.env.API_TOKEN;
 const uuid = require('uuid/v4')
-const downloader = require("download-file")
 const path = require("path")
+const zamzar = require("../lib/zamzar");
 
 router.get("/", (req, res) => {
     res.render("index")
@@ -13,60 +13,68 @@ router.get("/", (req, res) => {
 
 router.get("/validate", (req, res) => {
 
-    request.get('https://sandbox.zamzar.com/v1/formats/xls', function (err, response, body) {
-    if (err) {
-        console.error('Unable to get formats', err);
-    } else {
-        res.json(JSON.parse(body))
-        
-    }
-}).auth(apiKey, '', true);
+    const responseValidate = zamzar.validateFile('odt');
+    res.json(responseValidate)
+    
 })
 
-router.post("/upload", (req, res) => {
- 
-    const formData = {
-        target_format: 'odt',
-        source_file: fs.createReadStream(`src/files/uploads/${req.file.filename}`)
-    };
+router.post("/upload", async (req, res) => {
 
-    request.post({url:'https://sandbox.zamzar.com/v1/jobs/', formData: formData}, function (err, response, body) {
-    if (err) {
-        console.error('Hubo un error al realizar la conversion', err);
-    } else {
-        console.log('Conversion Realizada datos de su conversion');
-        const data = JSON.parse(body)
-        console.log('id upload', data.id)
-        res.redirect(`http://localhost:3000/convert?job=${data.id}`)
-    }
-}).auth(apiKey, '', true);
+    const responseUpload = await zamzar.uploadFile("odt", req.file.filename)
+    console.log('responseUpload', responseUpload);
+    res.redirect(`http://localhost:3000/convert?job=${responseUpload}`)
 
 })
 
-router.get("/convert", (req, res) => {
+router.get("/convert", async(req, res) => {
 
-request.get ('https://sandbox.zamzar.com/v1/jobs/' + 7083769, function (err, response, body) {
-    if (err) {
-        console.error('Unable to get job', err);
-    } else {
-        console.log('Realizada la conversion');
-        const data = JSON.parse(body)
-        res.redirect(`http://localhost:3000/download?id=${data.target_files[0].id}`)
-        
-        // res.json(JSON.parse(body))
-    }
-}).auth(apiKey, '', true);
+    const responseConvert = await zamzar.convertFile(req.query.job);
+    console.log('responseConvert', responseConvert);
+    res.redirect(`http://localhost:3000/validatestatus?id=${responseConvert}`)
+
+});
+
+router.get('/validatestatus',(req, res) => {
+
+    setTimeout(async () =>{
+
+        const responseStatus = await zamzar.validateStatus(req.query.id);
+            if(responseStatus.target_files[0].id === undefined){
+                res.json({"error": "Wait for the conversion file"})
+            }else{
+                
+                // res.json(responseStatus);
+
+                res.redirect(`http://localhost:3000/download?id=${responseStatus.target_files[0].id}`)
+
+                // res.redirect(`http://localhost:3000/validatestatus?id=${responseStatus.target_files[0].id }`)
+            }
+
+    }, 5000)
+
+//     request.get('https://sandbox.zamzar.com/v1/jobs/' + req.query.id, function (err, response, body)
+// {
+//     if (err) {
+//         console.error('No se pudo obtener el estado del archivo', err);
+//     } else {
+//         console.log('Estado validado');
+//         const data = JSON.parse(body)
+//         res.json(data)
+//         res.redirect(`http://localhost:3000/download?id=${data.target_files[0].id}`)
+
+//         // res.json(JSON.parse(body))
+//     }
+// }).auth(apiKey, '', true);
+    
 });
 
 router.get('/download', (req, res) => {
 
-    const localFilename = `src/files/downloads/${uuid()}.odt`;
+    const localFilename = `src/routes/${uuid()}.odt`;
 
-// Note: NPM's request library is incompatible with our API when its followRedirect flag is turned
-// on. Instead, this sample code performs a manual redirect if necessary.
+// Nota: La librería "request" es incompatible con su api cuando la bandera  followRedirect flag cambia a true
 
-request.get({url: 'https://sandbox.zamzar.com/v1/files/' + req.query.id + '/content', followRedirect: false}, 
-function (err, response, body) {
+    request.get({url: 'https://sandbox.zamzar.com/v1/files/' + req.query.id + '/content', followRedirect: false}, function (err, response, body) {
     if (err) {
         console.error('Unable to download file:', err);
     } else {
@@ -85,8 +93,9 @@ function (err, response, body) {
     }
 }).auth(apiKey,'',true).pipe(fs.createWriteStream(localFilename));
 
-
-res.download(`/xampp/htdocs/conversor/${localFilename}`)
+setTimeout(() => {
+    res.download(`${ __dirname + '/' + path.basename(localFilename)}`)
+}, 3000)
 
 })
 
