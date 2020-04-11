@@ -4,7 +4,6 @@ const apiKey = process.env.API_TOKEN;
 const uuid = require("uuid/v4");
 const path = require("path");
 
-
 let serviceZamzar = {
   validateFile: format => {
     return new Promise((resolve, reject) =>{
@@ -45,7 +44,7 @@ let serviceZamzar = {
     }).auth(apiKey, '', true);
 
     })
-    
+
   },
   convertFile: queryJob => {
     

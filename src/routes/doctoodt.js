@@ -45,6 +45,15 @@ router.post("/xlstoods", async (req, res) => {
 
 })
 
+router.post("/odttodoc", async (req, res) => {
+
+    const responseUpload = await zamzar.uploadFile("pdf", req.file.filename)
+    console.log('responseUploadOdt', responseUpload);
+    // res.redirect(`http://localhost:3000/convert?job=${responseUpload}`)
+    res.redirect(`${process.env.URL_API}/convert?job=${responseUpload}&conv=1`)
+
+})
+
 router.get("/convert", async(req, res) => {
 
     const responseConvert = await zamzar.convertFile(req.query.job);
@@ -62,28 +71,11 @@ router.get('/validatestatus',(req, res) => {
             if(responseStatus.target_files[0].id === undefined){
                 res.json({"error": "Wait for the conversion file"})
             }else{
-
                 res.redirect(`${process.env.URL_API}/download?id=${responseStatus.target_files[0].id}&name=${responseStatus.target_files[0].name}`)
-                 // console.log('estado', responseStatus) 
-                // res.redirect(`http://localhost:3000/validatestatus?id=${responseStatus.target_files[0].id }`)
             }
 
     }, 8000)
 
-//     request.get('https://sandbox.zamzar.com/v1/jobs/' + req.query.id, function (err, response, body)
-// {
-//     if (err) {
-//         console.error('No se pudo obtener el estado del archivo', err);
-//     } else {
-//         console.log('Estado validado');
-//         const data = JSON.parse(body)
-//         res.json(data)
-//         res.redirect(`http://localhost:3000/download?id=${data.target_files[0].id}`)
-
-//         // res.json(JSON.parse(body))
-//     }
-// }).auth(apiKey, '', true);
-    
 });
 
 router.get('/download', (req, res) => {
